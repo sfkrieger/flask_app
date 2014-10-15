@@ -1,5 +1,6 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from models import init_db
+import queries
 
 app = Flask(__name__)
 
@@ -56,8 +57,13 @@ def add():
 
 @app.route('/add/', methods=['POST'])
 def add_entry():
-    new_entry = [request.form['title'], request.form['text']]
-    print new_entry[0] + " " + new_entry[1]
+    new_entry = {'title':request.form['title'], 'text':request.form['text']}
+    title = request.form['title']
+    text = request.form['text']
+    # print new_entry['title'] + " " + new_entry['text']
+    print title + " " + text
+    # queries.create_blog_post(**new_entry)
+    queries.create_blog_post(title=title, content=text)
     return redirect(url_for('index'))
 
 
