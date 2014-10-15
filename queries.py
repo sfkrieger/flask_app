@@ -26,7 +26,9 @@ def create_blog_post(title, content):
 def get_blog_posts_in_order():
     """
     Returns all blog posts in date order
+
     :return:
     """
     db_session = create_session()
     return db_session.query(BlogPost).order_by(BlogPost.created_at)
+

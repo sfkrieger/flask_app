@@ -1,0 +1,3 @@
+[submodule "vendor/Ghost-Markdown-Editor"]
+	path = vendor/Ghost-Markdown-Editor
+	url = git@github.com:timsayshey/Ghost-Markdown-Editor.git
