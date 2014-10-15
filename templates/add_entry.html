@@ -1,0 +1,25 @@
+{% extends "base_template.html" %}
+{% block title %}Weeklies{% endblock title %}
+{% block content %}
+     <form action="{{ url_for('add_entry') }}" method='post' class='form-horizontal'>
+
+{#    <form class="form-horizontal" role="form" method='post' >#}
+        <div class="form-group">
+            <label for="input_title" class="col-sm-2 control-label">Title</label>
+
+            <div class="col-sm-10">
+                <input type="text" name="title" class="form-control" id="input_title" placeholder="Title">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input_text" class="col-sm-2 control-label">Text</label>
+
+            <div class="col-sm-10">
+                <input type="text" name='text' class="form-control" id="input_text" placeholder="Text">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn">ADD</button>
+        </div>
+    </form>
+{% endblock content %}
