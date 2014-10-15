@@ -6,10 +6,84 @@
 {% endblock %}
 {% block styles %}
     <link href="{{ url_for('static', filename='vendor/ghostdown/ghostdown.css') }}" media="all" rel="stylesheet">
+    <style>
+        #input_title {
+            margin-bottom: 20px;
+            border-top-width: 0;
+            border-right-width: 0;
+            border-bottom: 1px solid #000000;
+            border-left-width: 0;
+            outline: 0;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            border-radius: 0;
+            -webkit-border-radius: 0;
+            border-color: #ebebeb;
+            height: 50px;
+            font-size: 20px;
+            font-weight: bolder;
+        }
+
+        #input_title:focus, #input_title:focus {
+            outline: 0;
+        }
+
+        .floatingheader {
+            padding-left: 0 !important;
+        }
+
+        @media (max-width: 800px), (max-width: 800px) {
+            .features .editor .outer {
+                padding: 0 0 !important;
+            }
+
+            .features {
+                position: relative;
+                top: 18px;
+            }
+        }
+
+        @media (max-width: 860px), (max-width: 860px) {
+            .features .editor .editorwrap {
+                padding: 0 0 !important;
+            }
+
+            .features {
+                position: relative;
+                top: 18px;
+            }
+
+            .outer {
+                padding: 0 !important;
+            }
+        }
+
+        .features .editor .CodeMirror pre {
+            padding-top: 0;
+            padding-right: 40px;
+            padding-left: 0px;
+            padding-bottom: 0;
+        }
+
+        .features .editor .entry-markdown {
+            padding-left: 0 !important;
+        }
+
+        .features .editor .CodeMirror-lines {
+            padding-top: 25px;
+        }
+
+        .features .editor .entry-preview-content {
+            padding-top: 25px;
+            padding-left: 8px;
+        }
+
+    </style>
 {% endblock %}
-{% block content %}
+{% block container %}
     <form action="{{ url_for('add_entry') }}" method='post' class='form-horizontal'>
         <input type="text" name="title" class="form-control" id="input_title" placeholder="Title">
+
         <div class="features">
             <section class="editor">
                 <div class="outer">
@@ -36,4 +110,4 @@
         </div>
         <button type="submit" class="btn">ADD</button>
     </form>
-{% endblock content %}
+{% endblock %}
