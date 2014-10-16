@@ -9,7 +9,7 @@ from sqlalchemy.orm import deferred
 
 
 # This is the creation of the db, stored in memory vs. disk vs. remote (uses db drivers, so must connect through socket)
-engine = create_engine('sqlite:////tmp/foo.db', echo=True)
+engine = create_engine('postgres://mtford@localhost:5433/mtford', echo=True)
 Base = declarative_base()
 
 
