@@ -13,7 +13,6 @@ def index():
 
 
 @app.route('/daily/')
-def daily():
 @app.route('/weeklies/')
 def weeklies():
     entries = [{'date': 'Tuesday, October 14', 'title': 'My first blog', 'text': 'Some things happened today'}]

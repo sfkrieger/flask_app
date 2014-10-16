@@ -21,5 +21,5 @@ run(". ~/Virtualenvs/flaskenv/bin/activate && "
     "pip install -r ~/repo/requirements.txt")
 
 
-run("sudo /etc/init.d/gunicorn restart")
+run("sudo restart gunicorn")
 #todo: missing migration
