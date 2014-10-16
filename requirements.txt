@@ -1,3 +1,4 @@
+fabric
 flask
 sqlalchemy
 markdown
