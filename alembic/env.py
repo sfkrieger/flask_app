@@ -1,4 +1,5 @@
 from __future__ import with_statement
+import os
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
@@ -37,7 +38,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = os.environ['SQL_ALCHEMY_CONN_STRING']
     context.configure(url=url, target_metadata=target_metadata)
 
     with context.begin_transaction():
@@ -51,8 +52,10 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+    alembic_config = config.get_section(config.config_ini_section)
+    alembic_config['sqlalchemy.url'] = os.environ['SQL_ALCHEMY_CONN_STRING']
     engine = engine_from_config(
-        config.get_section(config.config_ini_section),
+        alembic_config,
         prefix='sqlalchemy.',
         poolclass=pool.NullPool)
 
