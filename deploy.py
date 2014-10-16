@@ -21,5 +21,15 @@ run(". ~/Virtualenvs/flaskenv/bin/activate && "
     "pip install -r ~/repo/requirements.txt")
 
 
-run("sudo /etc/init.d/gunicorn restart")
+run("gunicorn_running=`ps -ef | grep gunicorn | grep -v grep | wc -l` && "
+    "if [ $gunicorn_running -eq 0 ]; then sudo start gunicorn; else sudo restart gunicorn; fi")
+
+
+run('. ~/Virtualenvs/flaskenv/bin/activate && '
+    'cd ~/repo && '
+    'SQL_ALCHEMY_CONN_STRING=postgres://postgres:postgres@localhost:5432/flask '
+    'PYTHONPATH=. alembic upgrade head')
+
+
+
 #todo: missing migration

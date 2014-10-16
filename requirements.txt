@@ -2,4 +2,5 @@ fabric
 flask
 sqlalchemy
 markdown
+alembic
 psycopg2
