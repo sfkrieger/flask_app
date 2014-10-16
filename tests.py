@@ -20,7 +20,6 @@ class TestQueries(CustomTestCase):
         content = 'My Content'
         post = create_blog_post(title=title,
                                 content=content)
-
         self.assertEqual(post.title, title)
         self.assertEqual(post.content, content)
         self.assertTrue(post.created_at)
