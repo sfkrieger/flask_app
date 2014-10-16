@@ -14,6 +14,9 @@ def index():
 
 @app.route('/daily/')
 def daily():
+    posts = queries.get_blog_posts_in_order()
+    return render_template('daily.html', entries=posts)
+
 @app.route('/weeklies/')
 def weeklies():
     entries = [{'date': 'Tuesday, October 14', 'title': 'My first blog', 'text': 'Some things happened today'}]
