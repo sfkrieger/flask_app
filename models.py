@@ -6,10 +6,17 @@ import markdown
 from sqlalchemy import create_engine, Integer, Column, String, Date, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import deferred
+from os import environ
 
+conn_string = None
+try:
+    conn_string = environ['SQL_ALCHEMY_CONN_STRING']
+except KeyError:
+    print 'You need to set SQL_ALCHEMY_CONN_STRING'
+    exit(1)
 
 # This is the creation of the db, stored in memory vs. disk vs. remote (uses db drivers, so must connect through socket)
-engine = create_engine('postgres://mtford@localhost:5433/mtford', echo=True)
+engine = create_engine(conn_string, echo=True)
 Base = declarative_base()
 
 
