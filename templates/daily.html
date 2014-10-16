@@ -13,8 +13,7 @@
                 <div class="col-md-7">
                     <h2 class="featurette-heading"> {{ item.title }}.<span
                             class="text-muted"> {{ item.date }} </span></h2>
-
-                    <p class="lead">{{ item.text }}</p>
+                    {{ item.html|safe}}
                 </div>
                 <div class="col-md-5">
                     <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="500x500"

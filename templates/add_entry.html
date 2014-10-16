@@ -9,7 +9,9 @@
 {% endblock %}
 {% block content %}
     <form action="{{ url_for('add_entry') }}" method='post' class='form-horizontal'>
-        <input type="text" name="title" class="form-control" id="input_title" placeholder="Title">
+        <div><input type="text" name="title" class="form-control" id="input_title" placeholder="Title"></div>
+
+
         <div class="features">
             <section class="editor">
                 <div class="outer">
