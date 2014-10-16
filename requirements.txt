@@ -2,3 +2,4 @@ fabric
 flask
 sqlalchemy
 markdown
+alembic

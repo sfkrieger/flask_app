@@ -28,6 +28,8 @@ class BlogPost(Base):
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime, default=datetime.datetime.now,
                         onupdate=datetime.datetime.now)
+    summary = Column(String)
+
     @property
     def html(self):
         html = markdown.markdown(self.content)
@@ -36,6 +38,7 @@ class BlogPost(Base):
     @property
     def date(self):
         return self.created_at.strftime("%A %d %B %Y")
+
 
 def init_db():
     Base.metadata.create_all(engine)

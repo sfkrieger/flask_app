@@ -23,4 +23,8 @@ run(". ~/Virtualenvs/flaskenv/bin/activate && "
 
 run("gunicorn_running=`ps -ef | grep gunicorn | grep -v grep | wc -l` && "
     "if [ $gunicorn_running -eq 0 ]; then sudo start gunicorn; else sudo restart gunicorn; fi")
+
+
+
+
 #todo: missing migration
