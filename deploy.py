@@ -27,6 +27,7 @@ run("gunicorn_running=`ps -ef | grep gunicorn | grep -v grep | wc -l` && "
 
 run('. ~/Virtualenvs/flaskenv/bin/activate && '
     'cd ~/repo && '
+    'SQL_ALCHEMY_CONN_STRING=postgres://postgres:postgres@localhost:5432/flask '
     'PYTHONPATH=. alembic upgrade head')
 
 
