@@ -1,5 +1,5 @@
 {% extends "base_template.html" %}
-{% block title %}Weeklies{% endblock title %}
+{% block title %}Create New Entry{% endblock title %}
 {% block scripts %}
     <!--suppress HtmlFormInputWithoutLabel -->
     <script src="{{ url_for('static', filename='vendor/ghostdown/ghostdown.js') }}"></script>
@@ -78,25 +78,39 @@
     </style>
 {% endblock %}
 {% block container %}
-    <form action="{{ url_for('add_entry') }}" method='post' class='form-horizontal'>
-        <div><input type="text" name="title" class="form-control" id="input_title" placeholder="Title"></div>
-
-
+    <form action="
+    {% if not blog_item %}
+    {{ url_for('create_blog_post') }}
+    {% else %}
+    {{ url_for('manage_entry', blog_id=blog_item.id) }}
+    {% endif %}"
+          method='post'
+          class='form-horizontal'>
+        <div>
+            <input type="text"
+                   name="title"
+                   class="form-control"
+                   id="input_title"
+                   placeholder="{% if not blog_item %}Title{% endif %}"
+                   value="{% if blog_item %}{{ blog_item.title }}{% endif %}">
+        </div>
+        <input type="hidden" name="method" value="{% if blog_item %}put{% else %}post{% endif %}">
         <div class="features">
             <section class="editor">
                 <div class="outer">
                     <div class="editorwrap">
                         <section class="entry-markdown">
                             <header class="floatingheader">
-                                &nbsp;&nbsp; Markdown
+                                &nbsp;&nbsp;Markdown
                             </header>
                             <section class="entry-markdown-content">
-                                <textarea id="entry-markdown" name="text"></textarea>
+                                <textarea id="entry-markdown" name="text">{{ blog_item.content }}</textarea>
                             </section>
                         </section>
                         <section class="entry-preview active">
                             <header class="floatingheader">
-                                &nbsp;&nbsp; Preview <span class="entry-word-count">0 words</span>
+                                &nbsp;&nbsp;Preview
+                                <span class="entry-word-count">0 words</span>
                             </header>
                             <section class="entry-preview-content">
                                 <div class="rendered-markdown"></div>
@@ -106,6 +120,6 @@
                 </div>
             </section>
         </div>
-        <button type="submit" class="btn">ADD</button>
+        <button type="submit" class="btn">{% if not blog_item %}ADD{% else %}EDIT{% endif %}</button>
     </form>
 {% endblock %}

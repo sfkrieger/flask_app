@@ -1,0 +1,37 @@
+{% block navbar %}
+{% set navigation_bar = [
+('/view-daily', 'daily', 'Daily Blogs'),
+('/view-weeklies', 'weeklies', 'Weekly Reflections'),
+('/view-projects', 'projects', 'Projects'),
+('/view-resources', 'resources', 'Resources and Tutorials')] -%}
+
+<!--<div class="container">-->
+<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">InTents Blogging</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <!--<li class="active"><a href="#daily">Daily Blogs</a></li>-->
+                {% for href, id, caption in navigation_bar %}
+                <li {% if id == active_page %} class="active"{% endif %}>
+                <a href="{{ url_for('all_posts', page_type=id) }}">{{ caption }}</a></li>
+                {% endfor %}
+
+            </ul>
+            <a class="btn pull-right" href="{{ url_for('editor') }}" style="margin-top:10px; background-color: transparent; color:#ffffff">
+{#            <a class="btn pull-right" href="{{ url_for('aded') }}" style="margin-top:10px; background-color: transparent; color:#ffffff" action="POST">#}
+                <span class="glyphicon glyphicon-plus"></span></a>
+        </div>
+
+    </div>
+</div>
+{% endblock navbar %}

@@ -8,6 +8,8 @@ from sqlalchemy import create_engine, Integer, Column, String, Date, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import deferred
 from os import environ
+from sqlalchemy import create_engine, update
+
 
 conn_string = None
 try:
@@ -17,9 +19,6 @@ except KeyError:
     exit(1)
 
 # This is the creation of the db, stored in memory vs. disk vs. remote (uses db drivers, so must connect through socket)
-from sqlalchemy import create_engine
-conn = os.environ['SQL_ALCHEMY_CONN_STRING']
-
 engine = create_engine(conn_string, echo=True)
 Base = declarative_base()
 
@@ -43,6 +42,8 @@ class BlogPost(Base):
 
     @property
     def html(self):
+        # converts the content (which is in markdown), into html
+        # html contains the content as html, the function is rendering markdown as html...
         html = markdown.markdown(self.content)
         return html
 
@@ -51,7 +52,4 @@ class BlogPost(Base):
         return self.created_at.strftime("%A %d %B %Y")
 
 
-def init_db():
-    Base.metadata.create_all(engine)
-
-
+Base.metadata.create_all(engine)

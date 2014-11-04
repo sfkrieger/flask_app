@@ -1,5 +1,6 @@
 from unittest import TestCase
-from models import init_db, BlogPost
+import models
+from models import BlogPost
 from queries import create_blog_post, get_blog_posts_in_order, create_session
 
 
@@ -7,7 +8,7 @@ class CustomTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super(CustomTestCase, cls).setUpClass()
-        init_db()
+        # init_db()
 
     def tearDown(self):
         super(CustomTestCase, self).tearDown()
@@ -32,3 +33,13 @@ class TestQueries(CustomTestCase):
         self.assertEqual(posts[0].title, '0')
         self.assertEqual(posts[1].title, '1')
         self.assertEqual(posts[2].title, '2')
+
+    def test_delete_entry(self):
+
+        title = "New Post"
+        content = "Content"
+
+        post = create_blog_post(title=title, content=content)
+        self.assertEqual()
+        post = BlogPost(title=title, content=content)
+        self.assertEqual()

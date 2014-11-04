@@ -1,71 +1,209 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-from models import init_db
-import queries
+import models, queries
+
+"""
+INFORMATION ABOUT CONVENTIONS USED:
+Attempting to use RESTFUL API.
+
+In the pursuit of this glorious endevour, Tommy boy has implemented a nice lil switch statement that basically
+deals with all actions associated with a single blog post. I have no idea how this will work yet because I've been
+a secretary on this project, but I'm seeeww stoked to see how things turn out for him.
+
+So for starters, the way things are formatted:
+We map resources with methods. There should be a single path given, and it should map different actions to that path.
+
+
+UNDERSCORES:
+Underscores are used to denote actions. They are the non-resful parts of the api.
+When an action is an html page (such as add/edit), both the function and the path name will be appended with underscores
+
+HELPER FUNCTIONS AND STATUS SYMBOLS:
+1. For all helper functions, status symbols are returned.
+- If the status is 1, it was successful, if it was -1 it was unsucessful
+
+"""
 
 app = Flask(__name__)
 
 
-# To render a template you can use the render_template() method.
-# Provide the name of the template and the variables you want to pass to the template engine as keyword arguments.
 @app.route('/')
 def index():
     return render_template('base_template.html')
 
 
-@app.route('/daily/')
-def daily():
+"""
+=========== methods for blog listings ===========
+"""
+
+
+@app.route('/blogs/')
+# @app.route('/blogs/<blog_type>', methods=['POST', 'GET'])
+def all_posts(blog_type=None):
+    # TODO: then the current request is just to get all the blogs...
+    # pass # TODO: Display all blog entries (potentially for this page type)
     posts = queries.get_blog_posts_in_order()
-    return render_template('daily.html', entries=posts)
-
-@app.route('/weeklies/')
-def weeklies():
-    entries = [{'date': 'Tuesday, October 14', 'title': 'My first blog', 'text': 'Some things happened today'}]
-    return render_template('weeklies.html', entries=entries)
+    return render_template('all_blog_posts.html', page_type=blog_type, entries=posts)
 
 
-@app.route('/projects/')
-def proj():
-    entries = [{'date': 'Tuesday, October 14', 'title': 'My first blog', 'text': 'Some things happened today'}]
-    return render_template('projects.html', entries=entries)
+#Creates brand new blog post
+@app.route('/blogs/', methods=['POST'])
+def create_blog_post():
+    new_entry = {'title': request.form['title'], 'text': request.form['text']}
+    title = request.form['title']
+    text = request.form['text']
+    print title + " " + text
+    queries.create_blog_post(title=title, content=text)
+    return redirect(url_for('all_posts'))
 
 
-@app.route('/resources/')
-def resources():
-    entries = [{'date': 'Tuesday, October 14', 'title': 'My first blog', 'text': 'Some things happened today'}]
-    return render_template('resources.html', entries=entries)
+# Renders the markdown form for adding new blog
+@app.route('/blogs/editor')
+@app.route('/blogs/editor/<blog_id>')
+def editor(blog_id=None):
+    blog = None
+    if blog_id is not None:
+        blog = queries.get_byid(blog_id)
+    return render_template('editor.html', blog_item=blog)
 
 
-@app.route('/daily-add/')
-@app.route('/weeklies-add/')
-@app.route('/projects-add/')
-@app.route('/resources-add/')
-def add():
-    return render_template('add_entry.html')
+"""
+--------------------------------------------------
+=========== switch for individual blog ===========
+--------------------------------------------------
+"""
+
+
+@app.route('/blog/<blog_id>/', methods=['POST', 'GET'])
+def manage_entry(blog_id):
+    # Extract 'real' HTTP method from form hidden input
+    input_method = request.form.get('method')
+    if input_method and request.method == 'POST':
+        # User submitted a form.
+        if blog_id:
+            if input_method == 'delete':
+                blog = delete_blog(blog_id)
+                if blog:
+                    posts = queries.get_blog_posts_in_order()
+                    return render_template('all_blog_posts.html', entries=posts)
+                else:
+                    pass  # TODO: Couldnt find the blog post to delete. Return an error.
+                    # Delete blog post.
+            elif input_method == 'put':
+                # Update existing blog post.
+                blog = update_blog(blog_id, request.form)
+                if blog:
+                    # TODO: Eventually should show the post that we just updated.
+                    posts = queries.get_blog_posts_in_order()
+                    return render_template('all_blog_posts.html', entries=posts)
+                else:
+                    pass  # TODO: Couldnt find the blog post to update. Return an error.
+            else:
+                pass  # TODO: Return an error. Enforce that no other method can be used here.
+    else:
+        # Browser requests ourwebsite.com/blog/ or ourwebsite.com/blog/<blog_id>
+        if request.method == 'GET':
+            if blog_id:
+                pass  # TODO: Render jinja2 template to display a specific blog post.
+
+        else:
+            pass  # TODO: Return error.
+
+
+"""
+---------------------------------
+=======HELPER FUNCTIONS==========
+---------------------------------
+"""
+
+
+def delete_blog(blog_id):
+    print "In the delete entry function..."
+    type = request.form['type']
+    id = request.form['id']
+    deleted_blg = queries.delete_id(id)
+
+    # not sure what this is doing...
+    if (type == 'BlogPost'):
+        print 'Recognized the type'
+    else:
+        print "Didn't recognize the type: " + type
+
+    return deleted_blg
+
+
+def update_blog(blog_id, request_form):
+    print request_form
+    # if request_form doesnt contain a key and throws a KeyError, Flask catches this and returns an error 400...
+    # We have content as text in the form rather than just content...
+    return queries.modify_byid(blog_id, title=request_form['title'], content=request_form['text'])
+
+# # its only an abstract concept that the resources be identified by a path.. not necessarily how we're representing our
+# # data...?
+# @app.route('/blogs/')
+# # @app.route('/blogs/<page_type>')
+# def view_entries(page_type):
+# posts = queries.get_blog_posts_in_order()
+#     return render_template('all_blog_posts.html', page_type=page_type, entries=posts)
+#
+# # take this out...
+# @app.route('/view/<page_type>/')
+# def view_entries_old(page_type):
+#     posts = queries.get_blog_posts_in_order()
+#     return render_template('all_blog_posts.html', page_type=page_type, entries=posts)
+#
+# @app.route('/blog/')
+# def new_entry():
+#
+# @app.route('/add-entry/')
+# @app.route('/add-entry/<blog_id>')
+# def aded(blog_id=None):
+#     blog_item = None
+#     if blog_id:
+#         blog_item = queries.get_byid(blog_id)
+#     return render_template('editor.html', blog_item=blog_item)
+
+#
+# @app.route('/add/', methods=['POST'])
+# def add_entry():
+#     new_entry = {'title': request.form['title'], 'text': request.form['text']}
+#     title = request.form['title']
+#     text = request.form['text']
+#     # print new_entry['title'] + " " + new_entry['text']
+#     print title + " " + text
+#     # queries.create_blog_post(**new_entry)
+#     queries.create_blog_post(title=title, content=text)
+#     return redirect(url_for('index'))
+#
+# @app.route('/blog/', methods=['POST', 'GET'])
+# def view_blogs():
+#     pass
+
 
 
 #
-# @app.route('/add', methods=['POST'])
-# def add_entry():
-#     if not session.get('logged_in'):
-#         abort(401)
-#     g.db.execute('insert into entries (title, text) values (?, ?)',
-#                  [request.form['title'], request.form['text']])
-#     g.db.commit()
-#     flash('New entry was successfully posted')
-#     return redirect(url_for('show_entries'))
+# @app.route('/delete/', methods=['POST'])
+# def delete_entry():
+#     print "In the delete entry function..."
+#     type = request.form['type']
+#     id = request.form['id']
+#     queries.delete_id(id)
+#     if (type == 'BlogPost'):
+#         print 'Recognized the type'
+#     else:
+#         print "Didn't recognize the type: " + type
+#
+#     return redirect(url_for('index'))
+#
+#     # page_type = 'daily'
+#     # posts = queries.get_blog_posts_in_order()
+#     # return redirect(url_for('view_entries'), page_type=page_type, entries=posts)
 
-@app.route('/add/', methods=['POST'])
-def add_entry():
-    new_entry = {'title':request.form['title'], 'text':request.form['text']}
-    title = request.form['title']
-    text = request.form['text']
-    # print new_entry['title'] + " " + new_entry['text']
-    print title + " " + text
-    # queries.create_blog_post(**new_entry)
-    queries.create_blog_post(title=title, content=text)
-    return redirect(url_for('index'))
+# @app.route('/edit/<id>')
+# def edit_entry(id):
+#     print "In the edit entry function"
+
 
 
 if __name__ == '__main__':
-    init_db()
+    # init_db()
     app.run(debug=True)

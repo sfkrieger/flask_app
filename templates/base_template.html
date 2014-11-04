@@ -27,21 +27,31 @@
 
 <body>
 {% set active_page = active_page|default('index') -%}
-{% include 'nav.html' %}
+{% include 'nav_bar.html' %}
 {% block container %}
     <div class="container marketing">
         <hr class="featurette-divider">
         {% block content %}
             <!-- START THE FEATURETTES -->
 
-            <h2>My heading on the main page</h2>
+            <h2>Hardcoded Mainpage Heading</h2>
 
             <p>Some content</p>
 
         {% endblock content %}
-        {% include 'footer.html' %}
     </div>
-{% endblock %}
+{% endblock container %}
 
+
+{% block footer %}
+    <div class='footer' >
+        <div class="container">
+            <a href="#">Back to top</a>
+            © 2014 FordKrieger Inc. <a href="#">Privacy</a> · <a href="#">Terms</a>
+            </p>
+        </div>
+    </div>
+
+{% endblock footer %}
 </body>
 </html>
