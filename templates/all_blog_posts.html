@@ -15,8 +15,15 @@
         {% for item in entries %}
             <div class="row featurette">
                 <div class="col-md-7">
+                    {% if not single_page %}
+                    <a href="{{ url_for("single_post", blog_id=item.id) }}">
                     <h2 class="featurette-heading"> {{ item.title }}.<span
                             class="text-muted"> {{ item.date }} </span></h2>
+                    </a>
+                    {%  else %}
+                    <h2 class="featurette-heading"> {{ item.title }}.<span
+                            class="text-muted"> {{ item.date }} </span></h2>
+                    {% endif %}
                     {{ item.html|safe }}
                 </div>
                 <div class="col-md-5">

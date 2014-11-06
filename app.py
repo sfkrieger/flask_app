@@ -37,13 +37,17 @@ def index():
 
 
 @app.route('/blogs/')
-# @app.route('/blogs/<blog_type>', methods=['POST', 'GET'])
-def all_posts(blog_type=None):
+@app.route('/blogs/<page_type>')
+def all_posts(page_type=None):
     # TODO: then the current request is just to get all the blogs...
     # pass # TODO: Display all blog entries (potentially for this page type)
     posts = queries.get_blog_posts_in_order()
-    return render_template('all_blog_posts.html', page_type=blog_type, entries=posts)
+    return render_template('all_blog_posts.html', page_type=page_type, entries=posts)
 
+@app.route('/blogs/<blog_id>')
+def single_post(blog_id):
+    posts = [queries.get_byid(blog_id)]
+    return render_template('all_blog_posts.html', page_type=None, entries=posts, single_page=True);
 
 #Creates brand new blog post
 @app.route('/blogs/', methods=['POST'])
@@ -115,7 +119,6 @@ def manage_entry(blog_id):
 ---------------------------------
 """
 
-
 def delete_blog(blog_id):
     print "In the delete entry function..."
     type = request.form['type']
@@ -136,72 +139,6 @@ def update_blog(blog_id, request_form):
     # if request_form doesnt contain a key and throws a KeyError, Flask catches this and returns an error 400...
     # We have content as text in the form rather than just content...
     return queries.modify_byid(blog_id, title=request_form['title'], content=request_form['text'])
-
-# # its only an abstract concept that the resources be identified by a path.. not necessarily how we're representing our
-# # data...?
-# @app.route('/blogs/')
-# # @app.route('/blogs/<page_type>')
-# def view_entries(page_type):
-# posts = queries.get_blog_posts_in_order()
-#     return render_template('all_blog_posts.html', page_type=page_type, entries=posts)
-#
-# # take this out...
-# @app.route('/view/<page_type>/')
-# def view_entries_old(page_type):
-#     posts = queries.get_blog_posts_in_order()
-#     return render_template('all_blog_posts.html', page_type=page_type, entries=posts)
-#
-# @app.route('/blog/')
-# def new_entry():
-#
-# @app.route('/add-entry/')
-# @app.route('/add-entry/<blog_id>')
-# def aded(blog_id=None):
-#     blog_item = None
-#     if blog_id:
-#         blog_item = queries.get_byid(blog_id)
-#     return render_template('editor.html', blog_item=blog_item)
-
-#
-# @app.route('/add/', methods=['POST'])
-# def add_entry():
-#     new_entry = {'title': request.form['title'], 'text': request.form['text']}
-#     title = request.form['title']
-#     text = request.form['text']
-#     # print new_entry['title'] + " " + new_entry['text']
-#     print title + " " + text
-#     # queries.create_blog_post(**new_entry)
-#     queries.create_blog_post(title=title, content=text)
-#     return redirect(url_for('index'))
-#
-# @app.route('/blog/', methods=['POST', 'GET'])
-# def view_blogs():
-#     pass
-
-
-
-#
-# @app.route('/delete/', methods=['POST'])
-# def delete_entry():
-#     print "In the delete entry function..."
-#     type = request.form['type']
-#     id = request.form['id']
-#     queries.delete_id(id)
-#     if (type == 'BlogPost'):
-#         print 'Recognized the type'
-#     else:
-#         print "Didn't recognize the type: " + type
-#
-#     return redirect(url_for('index'))
-#
-#     # page_type = 'daily'
-#     # posts = queries.get_blog_posts_in_order()
-#     # return redirect(url_for('view_entries'), page_type=page_type, entries=posts)
-
-# @app.route('/edit/<id>')
-# def edit_entry(id):
-#     print "In the edit entry function"
-
 
 
 if __name__ == '__main__':
