@@ -1,22 +1,66 @@
+$brand-color: rgb(51, 51, 51);
+$link-color: #7A7A7A;
+
 @mixin transitions() {
   -webkit-transition: color 0.5s, background 0.5s;
   transition: color 0.5s, background 0.5s;
 }
 
 .navbar {
-  .navbar-nav > li {
-    text-transform: uppercase;
-    white-space: nowrap;
-    font-size: 11px;
-    font-weight: 200;
-    @include transitions();
-    letter-spacing: 1.5px;
-    color: #7A7A7A;
+  a {
+    margin: 0;
+    .glyphicon-plus {
+      font-size: 24px;
+      margin-top: 9px;
+      font-weight: bolder;
+      color: $link-color;
+      &:hover {
+        color: $brand-color;
+      }
+    }
+    &.btn {
+      padding: 0;
+    }
+  }
+  .navbar-collapse {
+    padding: 0;
+  }
+
+  padding-left: 20px;
+  padding-right: 20px;
+  .nav {
+    li {
+      &.active {
+        a {
+          background-color: black;
+        }
+      }
+      a {
+        text-transform: uppercase;
+        white-space: nowrap;
+        font-size: 11px;
+        font-weight: 400;
+        @include transitions();
+        letter-spacing: 1.5px;
+        color: $link-color;
+        &:focus, &:hover {
+          background-color: black;
+        }
+        margin-top: 15px;
+        margin-left: 10px;
+        height: 20px;
+        padding: 0 5px;
+        border-radius: 4px;
+      }
+    }
   }
   .navbar-brand {
     text-transform: uppercase;
-    font-weight: 400;
-    color: rgb(51, 51, 51);
+    font-weight: 600;
+    color: $brand-color;
+    &:hover {
+      color: inherit;
+    }
   }
 }
 

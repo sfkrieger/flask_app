@@ -8,18 +8,16 @@
     {% block entry_page %}
         <div id="all-posts">
             {% for item in entries %}
-                <div class="row featurette c{{ (loop.index) % 7 }}">
-                    <div class="col-md-2">
-                        <img class="img-responsive placeholder-img"
-                             src="http://aturennyc.com/wp-content/plugins/woocommerce/assets/images/placeholder.png">
-                    </div>
-                    <div class="col-md-10">
-                        <h2 class="featurette-heading"><a
-                                href="{{ url_for("single_post", blog_id=item.id) }}">{{ item.title }}</a></h2>
-
-                        <h3 class="text-muted date">
+                <div class="row featurette c{{ (loop.index - 1) % 7 }}">
+                    {#                    <div class="col-md-2">#}
+                    {#                        <img class="img-responsive placeholder-img" src="http://aturennyc.com/wp-content/plugins/woocommerce/assets/images/placeholder.png">#}
+                    {#                    </div>#}
+                    <div class="col-md-12">
+                        <span class="small date">
                             {{ item.date }}
-                        </h3>
+                        </span>
+
+                        <h1 class="featurette-heading">{{ item.title }}</h1>
 
                         <div class="content">
                             {{ item.html|safe }}

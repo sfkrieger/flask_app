@@ -5032,26 +5032,57 @@ body {
 .c6 {
   background-color: #72616e; }
 
-.navbar .navbar-nav > li {
-  text-transform: uppercase;
-  white-space: nowrap;
-  font-size: 11px;
-  font-weight: 200;
-  -webkit-transition: color 0.5s, background 0.5s;
-  transition: color 0.5s, background 0.5s;
-  letter-spacing: 1.5px;
-  color: #7A7A7A; }
-.navbar .navbar-brand {
-  text-transform: uppercase;
-  font-weight: 400;
-  color: #333333; }
+.navbar {
+  padding-left: 20px;
+  padding-right: 20px; }
+  .navbar a {
+    margin: 0; }
+    .navbar a .glyphicon-plus {
+      font-size: 24px;
+      margin-top: 9px;
+      font-weight: bolder;
+      color: #7A7A7A; }
+      .navbar a .glyphicon-plus:hover {
+        color: #333333; }
+    .navbar a.btn {
+      padding: 0; }
+  .navbar .navbar-collapse {
+    padding: 0; }
+  .navbar .nav li.active a {
+    background-color: black; }
+  .navbar .nav li a {
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 400;
+    -webkit-transition: color 0.5s, background 0.5s;
+    transition: color 0.5s, background 0.5s;
+    letter-spacing: 1.5px;
+    color: #7A7A7A;
+    margin-top: 15px;
+    margin-left: 10px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 4px; }
+    .navbar .nav li a:focus, .navbar .nav li a:hover {
+      background-color: black; }
+  .navbar .navbar-brand {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #333333; }
+    .navbar .navbar-brand:hover {
+      color: inherit; }
 
 .features .editor .CodeMirror {
   font-family: 'Source Code Pro', monospace !important; }
 
 #all-posts {
-  color: white;
-  padding-bottom: 40px; }
+  color: white; }
+  #all-posts h1, #all-posts h2, #all-posts h3, #all-posts p {
+    margin: 0; }
+  #all-posts .small {
+    font-size: 12px;
+    text-transform: uppercase; }
   #all-posts .date {
     opacity: 0.7;
     margin-top: 0;
@@ -5059,7 +5090,7 @@ body {
   #all-posts .placeholder-img {
     border: none; }
   #all-posts .row {
-    padding-top: 40px; }
+    padding: 20px; }
   #all-posts .content {
     opacity: 0.7;
     font-size: 15px;
