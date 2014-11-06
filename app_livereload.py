@@ -3,4 +3,5 @@ from app import app
 
 server = Server(app.wsgi_app)
 server.watch('scss/*.scss', shell('scss scss/main.scss', output='static/css/style.css'))
+server.watch('templates/*.html')
 server.serve()

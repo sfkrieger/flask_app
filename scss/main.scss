@@ -1,10 +1,33 @@
 @import "../bower_components/bootstrap-sass/lib/bootstrap.scss";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800);
-
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:200,400,600,900);
 
 body {
   font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
 }
 
+.container {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  @media(min-width: 992px) {
+    width: 100%;
+  }
+  @media(min-width: 768px) {
+    width: 100%;
+  }
+}
 
+.navbar-inverse {
+  background-color: rgb(240, 240, 240);
+  border: none;
+}
+
+@import "_colours.scss";
 @import "_nav.scss";
+@import "_editor.scss";
+@import "_allposts.scss";
