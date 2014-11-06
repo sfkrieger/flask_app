@@ -1,0 +1,20 @@
+{
+  "name": "sammy_flask",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sfkrieger/getting_started",
+  "authors": [
+    "Michael Ford <mtford@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.0"
+  }
+}

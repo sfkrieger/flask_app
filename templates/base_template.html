@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Intents Blogging{% endblock title %}</title>
         <!-- Bootstrap -->
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css' ) }}" rel="stylesheet">
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -32,12 +32,7 @@
     <div class="container marketing">
         <hr class="featurette-divider">
         {% block content %}
-            <!-- START THE FEATURETTES -->
-
-            <h2>Hardcoded Mainpage Heading</h2>
-
-            <p>Some content</p>
-
+            <h2>Home. Summary here or something?</h2>
         {% endblock content %}
     </div>
 {% endblock container %}

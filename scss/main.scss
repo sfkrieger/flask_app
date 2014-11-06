@@ -1,0 +1,10 @@
+@import "../bower_components/bootstrap-sass/lib/bootstrap.scss";
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800);
+
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+@import "_nav.scss";

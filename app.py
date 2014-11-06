@@ -1,5 +1,5 @@
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-import models, queries
+from flask import Flask, request, redirect, url_for, render_template
+import queries
 
 """
 INFORMATION ABOUT CONVENTIONS USED:

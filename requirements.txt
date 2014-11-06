@@ -1,3 +1,4 @@
+livereload
 fabric
 flask
 sqlalchemy

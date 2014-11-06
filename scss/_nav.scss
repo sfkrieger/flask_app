@@ -1,0 +1,22 @@
+@mixin transitions() {
+  -webkit-transition: color 0.5s, background 0.5s;
+  transition: color 0.5s, background 0.5s;
+}
+
+.navbar {
+  .navbar-nav > li {
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 200;
+    @include transitions();
+    letter-spacing: 1.5px;
+  }
+  .navbar-brand {
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+  }
+}
+
