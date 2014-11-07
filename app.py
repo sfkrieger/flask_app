@@ -1,6 +1,8 @@
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-import models, queries
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, ext
+from flask.ext.login import LoginManager, login_user, login_required, logout_user
 
+import models, queries
+import config_secret
 """
 INFORMATION ABOUT CONVENTIONS USED:
 Attempting to use RESTFUL API.
@@ -24,13 +26,53 @@ HELPER FUNCTIONS AND STATUS SYMBOLS:
 """
 
 app = Flask(__name__)
+config_secret.install_secret_key(app)
 
+# login happening
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 @app.route('/')
 def index():
     return render_template('base_template.html')
 
+"""
+=========== auth ================================
+"""
+@login_manager.user_loader
+def load_user(userid):
+    return queries.get_user_byid(userid)
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
+        # try to validate user
+        name = request.form['username']
+        pswd = request.form['password']
+        usr = queries.get_user_byname(name)
+        if usr:
+            if usr.password == pswd:
+                login_user(usr)
+                session['logged_in'] = True
+                # session['username'] = name
+                return redirect(url_for("index"))
+        else:
+            return render_template("login.html", err='No such user with username "' + name + '"')
+    user_id = session.get('user_id')
+    # session['username'] = request.form['username']
+    # print "====================== " + user_id + "=========================="
+    user = None
+    if user_id:
+        user = load_user(user_id)
+    return render_template("login.html", user=user)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for(all_posts))
+
+#
 """
 =========== methods for blog listings ===========
 """
@@ -52,11 +94,12 @@ def single_post(blog_id):
 #Creates brand new blog post
 @app.route('/blogs/', methods=['POST'])
 def create_blog_post():
-    new_entry = {'title': request.form['title'], 'text': request.form['text']}
+    new_entry = {'title': request.form['title'], 'text': request.form['text'], 'type': request.form['type']}
     title = request.form['title']
     text = request.form['text']
+    type = request.form['type']
     print title + " " + text
-    queries.create_blog_post(title=title, content=text)
+    queries.create_blog_post(title=title, content=text, type=type)
     return redirect(url_for('all_posts'))
 
 
