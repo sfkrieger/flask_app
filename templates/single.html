@@ -1,0 +1,10 @@
+{% extends "base_template.html" %}
+{% block title %}dunno yet{% endblock title %}
+{% block content %}
+    <div id="single-post">
+        <span class="small date">{{ post.date }}</span>
+
+        <h1 class="title">{{ post.title }}</h1>
+        {{ post.html|safe }}
+    </div>
+{% endblock content %}

@@ -2,6 +2,93 @@
   .editor {
     .CodeMirror {
       font-family: 'Source Code Pro', monospace !important;
+      padding-right: 20px;
+      padding-left: 20px;
     }
   }
+}
+
+
+.floatingheader {
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+#input_title {
+  outline: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -webkit-border-radius: 0;
+  height: 50px;
+  font-size: 20px;
+  font-weight: bolder;
+  border-left-width: 0 !important;
+  border-top-width: 0 !important;
+  border-right-width: 0 !important;
+  border-bottom-width: 1px !important;
+}
+
+.form-control {
+
+}
+
+#input_title:focus, #input_title:focus {
+  outline: 0;
+}
+
+.floatingheader {
+  padding-left: 0 !important;
+}
+
+@media (max-width: 800px), (max-width: 800px) {
+  .features .editor .outer {
+    padding: 0 0 !important;
+  }
+
+  .features {
+    position: relative;
+    top: 18px;
+  }
+}
+
+@media (max-width: 860px), (max-width: 860px) {
+  .features .editor .editorwrap {
+    padding: 0 0 !important;
+  }
+
+  .features {
+    position: relative;
+    top: 18px;
+  }
+
+  .outer {
+    padding: 0 !important;
+  }
+}
+
+.features .editor .CodeMirror pre {
+  padding: 0 0 0 0;
+}
+
+.features .editor .entry-markdown {
+  padding-left: 0 !important;
+  padding-top: 20px;
+}
+
+.features .editor .entry-preview {
+  padding-left: 0 !important;
+  padding-top: 20px;
+}
+
+.features .editor .CodeMirror pre {
+  padding: 0 !important;
+}
+
+.features .editor .CodeMirror-lines {
+  padding-top: 25px;
+}
+
+.features .editor .entry-preview-content {
+  padding-top: 25px;
+  padding-left: 8px;
 }

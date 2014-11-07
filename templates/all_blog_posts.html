@@ -8,14 +8,12 @@
     {% block entry_page %}
         <div id="all-posts">
             {% for item in entries %}
-                <div class="row featurette c{{ (loop.index - 1) % 7 }}">
-                    {#                    <div class="col-md-2">#}
-                    {#                        <img class="img-responsive placeholder-img" src="http://aturennyc.com/wp-content/plugins/woocommerce/assets/images/placeholder.png">#}
-                    {#                    </div>#}
-                    <div class="col-md-12">
-                        <span class="small date">
-                            {{ item.date }}
-                        </span>
+                <div class="row featurette c{{ (loop.index - 1) % 7 }}" onclick="window.location='{{ url_for('single_post', blog_id=item.id) }}';">
+                    <div class="overlay"></div>
+                    <div class="col-md-12 col">
+                            <span class="small date">
+                                {{ item.date }}
+                            </span>
 
                         <h1 class="featurette-heading">{{ item.title }}</h1>
 
@@ -24,25 +22,25 @@
                         </div>
                     </div>
                 </div>
-                {#                <a href="{{ url_for ('editor', blog_id=item.id) }}">#}
-                {#                    <button id="edit-btn-{{ item.id }}" class="btn btn-default btn-lg edit-btn"#}
-                {#                            form="edit-form-{{ item.id }}">#}
-                {#                        <span class="glyphicon glyphicon-pencil"></span> Edit#}
-                {#                    </button>#}
-                {#                </a>#}
-                {#                <form id='delete-fm-{{ item.id }}' action="{{ url_for( 'manage_entry', blog_id=item.id) }}"#}
-                {#                      method='post'>#}
-                {#                    <input type="hidden" name="method" value="delete">#}
-                {#                    <button id="blogid-{{ item.id }}" type="button" class="btn btn-default btn-lg ppr form-inline"#}
-                {#                            data-toggle="popover"#}
-                {#                            title="Delete Entry"#}
-                {#                            data-trigger="focus"#}
-                {#                            data-html="false">#}
-                {#                        <span class="glyphicon glyphicon-trash"></span> Delete#}
-                {#                    </button>#}
-                {#                    <input type="hidden" value="{{ item.id }}" name="id">#}
-                {#                    <input type="hidden" value="{{ item.__class__.__name__ }}" name="type">#}
-                {#                </form>#}
+{#                <a href="{{ url_for ('editor', blog_id=item.id) }}">#}
+{#                    <button id="edit-btn-{{ item.id }}" class="btn btn-default btn-lg edit-btn"#}
+{#                            form="edit-form-{{ item.id }}">#}
+{#                        <span class="glyphicon glyphicon-pencil"></span> Edit#}
+{#                    </button>#}
+{#                </a>#}
+{#                <form id='delete-fm-{{ item.id }}' action="{{ url_for( 'manage_entry', blog_id=item.id) }}"#}
+{#                      method='post'>#}
+{#                    <input type="hidden" name="method" value="delete">#}
+{#                    <button id="blogid-{{ item.id }}" type="button" class="btn btn-default btn-lg ppr form-inline"#}
+{#                            data-toggle="popover"#}
+{#                            title="Delete Entry"#}
+{#                            data-trigger="focus"#}
+{#                            data-html="false">#}
+{#                        <span class="glyphicon glyphicon-trash"></span> Delete#}
+{#                    </button>#}
+{#                    <input type="hidden" value="{{ item.id }}" name="id">#}
+{#                    <input type="hidden" value="{{ item.__class__.__name__ }}" name="type">#}
+{#                </form>#}
             {% endfor %}
         </div>
     {% endblock entry_page %}

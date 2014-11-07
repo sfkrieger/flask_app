@@ -2,6 +2,9 @@
 SQLAlchemy declarations.
 """
 import datetime
+import hashlib
+import sha
+from flask.ext.login import UserMixin
 import markdown
 import os
 from sqlalchemy import create_engine, Integer, Column, String, Date, DateTime
@@ -53,3 +56,16 @@ class BlogPost(Base):
 
 
 Base.metadata.create_all(engine)
+
+
+# class User(Base, UserMixin):
+#     password = Column(String)
+#
+#     def set_password(self, password):
+#         hashlib.
+#         self.password = sha5(password)
+#         self.save()
+#
+#     def check_password(self, password):
+#         sha = sha5(password)
+#         return self.password == sha

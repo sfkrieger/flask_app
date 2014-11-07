@@ -1,4 +1,5 @@
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, flash
+from flask.ext.login import LoginManager, login_user, login_required, logout_user
 import queries
 
 """
@@ -25,6 +26,30 @@ HELPER FUNCTIONS AND STATUS SYMBOLS:
 
 app = Flask(__name__)
 
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+#
+# @login_manager.user_loader
+# def load_user(userid):
+#     return User.get(userid)
+#
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         # login and validate the user...
+#         login_user(user)
+#         flash("Logged in successfully.")
+#         return redirect(request.args.get("next") or url_for("index"))
+#     return render_template("login.html", form=form)
+#
+#
+# @app.route("/logout")
+# @login_required
+# def logout():
+#     logout_user()
+#     return redirect(url_for('all_posts'))
+
 
 @app.route('/')
 def index():
@@ -37,17 +62,16 @@ def index():
 
 
 @app.route('/blogs/')
-@app.route('/blogs/<page_type>')
-def all_posts(page_type=None):
+def all_posts():
     # TODO: then the current request is just to get all the blogs...
     # pass # TODO: Display all blog entries (potentially for this page type)
     posts = queries.get_blog_posts_in_order()
-    return render_template('all_blog_posts.html', page_type=page_type, entries=posts)
+    return render_template('all_blog_posts.html', page_type=request.args.get('page_type'), entries=posts)
 
 @app.route('/blogs/<blog_id>')
 def single_post(blog_id):
-    posts = [queries.get_byid(blog_id)]
-    return render_template('all_blog_posts.html', page_type=None, entries=posts, single_page=True);
+    post = queries.get_byid(blog_id)
+    return render_template('single.html', post=post)
 
 #Creates brand new blog post
 @app.route('/blogs/', methods=['POST'])

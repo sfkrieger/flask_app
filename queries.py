@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from models import BlogPost, engine
 from sqlalchemy.orm.exc import NoResultFound
 
+
 def create_session():
     db_session = Session()
     db_session.bind = engine
@@ -34,9 +35,7 @@ def get_blog_posts_in_order():
     return db_session.query(BlogPost).order_by(desc(BlogPost.created_at))
 
 
-
 def get_byid(blog_id):
-
     """
     Returns the blog post by the id
     :return: the item that you're looking for you dum
@@ -46,7 +45,6 @@ def get_byid(blog_id):
     qry = db_session.query(BlogPost).filter(BlogPost.id == blog_id)
     item = qry.one()
     return item
-
 
 
 def delete_id(id):
@@ -62,6 +60,7 @@ def delete_id(id):
     db_session.delete(todel)
     db_session.commit()
     return todel
+
 
 def modify_byid(blog_id, content, title):
     db_session = create_session()

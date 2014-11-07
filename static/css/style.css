@@ -4995,6 +4995,15 @@ body {
   font-smoothing: antialiased;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004); }
 
+.small {
+  font-size: 12px;
+  text-transform: uppercase; }
+
+.date {
+  opacity: 0.7;
+  margin-top: 0;
+  padding-top: 0; }
+
 .container {
   padding: 0;
   margin-left: 0;
@@ -5049,14 +5058,15 @@ body {
   .navbar .navbar-collapse {
     padding: 0; }
   .navbar .nav li.active a {
-    background-color: black; }
+    background-color: black;
+    color: white; }
   .navbar .nav li a {
+    transition: background-color 0.5s, color 0.5s;
+    -webkit-transition: background-color 0.5s, color 0.5s;
     text-transform: uppercase;
     white-space: nowrap;
     font-size: 11px;
     font-weight: 400;
-    -webkit-transition: color 0.5s, background 0.5s;
-    transition: color 0.5s, background 0.5s;
     letter-spacing: 1.5px;
     color: #7A7A7A;
     margin-top: 15px;
@@ -5065,7 +5075,8 @@ body {
     padding: 0 5px;
     border-radius: 4px; }
     .navbar .nav li a:focus, .navbar .nav li a:hover {
-      background-color: black; }
+      background-color: black;
+      color: white; }
   .navbar .navbar-brand {
     text-transform: uppercase;
     font-weight: 600;
@@ -5074,24 +5085,102 @@ body {
       color: inherit; }
 
 .features .editor .CodeMirror {
-  font-family: 'Source Code Pro', monospace !important; }
+  font-family: 'Source Code Pro', monospace !important;
+  padding-right: 20px;
+  padding-left: 20px; }
+
+.floatingheader {
+  text-transform: uppercase;
+  letter-spacing: 1.2px; }
+
+#input_title {
+  outline: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -webkit-border-radius: 0;
+  height: 50px;
+  font-size: 20px;
+  font-weight: bolder;
+  border-left-width: 0 !important;
+  border-top-width: 0 !important;
+  border-right-width: 0 !important;
+  border-bottom-width: 1px !important; }
+
+#input_title:focus, #input_title:focus {
+  outline: 0; }
+
+.floatingheader {
+  padding-left: 0 !important; }
+
+@media (max-width: 800px), (max-width: 800px) {
+  .features .editor .outer {
+    padding: 0 0 !important; }
+
+  .features {
+    position: relative;
+    top: 18px; } }
+@media (max-width: 860px), (max-width: 860px) {
+  .features .editor .editorwrap {
+    padding: 0 0 !important; }
+
+  .features {
+    position: relative;
+    top: 18px; }
+
+  .outer {
+    padding: 0 !important; } }
+.features .editor .CodeMirror pre {
+  padding: 0 0 0 0; }
+
+.features .editor .entry-markdown {
+  padding-left: 0 !important;
+  padding-top: 20px; }
+
+.features .editor .entry-preview {
+  padding-left: 0 !important;
+  padding-top: 20px; }
+
+.features .editor .CodeMirror pre {
+  padding: 0 !important; }
+
+.features .editor .CodeMirror-lines {
+  padding-top: 25px; }
+
+.features .editor .entry-preview-content {
+  padding-top: 25px;
+  padding-left: 8px; }
 
 #all-posts {
   color: white; }
   #all-posts h1, #all-posts h2, #all-posts h3, #all-posts p {
     margin: 0; }
-  #all-posts .small {
-    font-size: 12px;
-    text-transform: uppercase; }
-  #all-posts .date {
-    opacity: 0.7;
-    margin-top: 0;
-    padding-top: 0; }
   #all-posts .placeholder-img {
     border: none; }
   #all-posts .row {
-    padding: 20px; }
+    margin-left: 0;
+    margin-right: 0;
+    cursor: pointer;
+    position: relative; }
+    #all-posts .row .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      float: left;
+      background-color: black;
+      opacity: 0.0;
+      padding: 0;
+      margin: 0;
+      z-index: 9;
+      pointer-events: none;
+      transition: opacity 0.5s; }
+    #all-posts .row .col {
+      padding: 20px; }
   #all-posts .content {
     opacity: 0.7;
     font-size: 15px;
     line-height: 23px; }
+
+#single-post {
+  padding: 20px; }
+  #single-post .title {
+    margin-top: 0; }
