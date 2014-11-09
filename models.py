@@ -13,6 +13,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import deferred
 from os import environ
 from sqlalchemy import create_engine, update, ForeignKey
+
 conn_string = None
 try:
     conn_string = environ['SQL_ALCHEMY_CONN_STRING']
@@ -45,8 +46,8 @@ class BlogPost(Base):
     type = Column(String, nullable=False, index=True)
 
     __mapper_args__ = {
-        'polymorphic_on':type,
-        'polymorphic_identity':'post'
+        'polymorphic_on': type,
+        'polymorphic_identity': 'post'
     }
 
     @property
@@ -60,41 +61,45 @@ class BlogPost(Base):
     def date(self):
         return self.created_at.strftime("%A %d %B %Y")
 
-    # @todo: finish this property if we want to include an abbreviation of the summary
-    # @property
-    # def abbreviated(self):
+        # @todo: finish this property if we want to include an abbreviation of the summary
+        # @property
+        # def abbreviated(self):
 
 
 class Daily(BlogPost):
     # __tablename__ = "daily"
 
     __mapper_args__ = {
-        'polymorphic_identity':'daily',
+        'polymorphic_identity': 'daily',
     }
+
 
 class Weekly(BlogPost):
     # __tablename__ = "weekly"
 
     __mapper_args__ = {
-        'polymorphic_identity':'weekly',
+        'polymorphic_identity': 'weekly',
     }
+
 
 class Project(BlogPost):
     # __tablename__ = "project"
 
     __mapper_args__ = {
-        'polymorphic_identity':'project',
+        'polymorphic_identity': 'project',
     }
+
 
 class Todo(BlogPost):
     # __tablename__ = "todo"
 
     __mapper_args__ = {
-        'polymorphic_identity':'todo',
+        'polymorphic_identity': 'todo',
     }
 
+
 # class Type(object):
-#     daily = 1
+# daily = 1
 #     weekly = 2
 #     project = 3
 #     todo = 4
@@ -102,13 +107,15 @@ class Todo(BlogPost):
 class User(Base, UserMixin):
     __tablename__ = 'User'
     id = Column(Integer, primary_key=True)
-    user_name = Column(String)
+    user_name = Column(String, unique=True)
     password = Column(PasswordType(
         schemes=[
             'pbkdf2_sha512'
         ]
     ))
+
     # self.active = active
+
 
 Base.metadata.create_all(engine)
 
