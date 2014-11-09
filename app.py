@@ -104,6 +104,18 @@ def create_blog_post():
     queries.create_blog_post(title=title, content=text, type=type)
     return redirect(url_for('all_posts'))
 
+#Creates brand new blog post
+@app.route('/projects/', methods=['GET'])
+def projects():
+    return render_template('projects.html')
+
+
+#Creates brand new blog post
+@app.route('/projects/add', methods=['GET'])
+def add_project():
+    return render_template('add_project.html')
+
+
 
 # Renders the markdown form for adding new blog
 @app.route('/blogs/editor')

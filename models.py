@@ -100,7 +100,7 @@ class Todo(BlogPost):
 
 # class Type(object):
 # daily = 1
-#     weekly = 2
+# weekly = 2
 #     project = 3
 #     todo = 4
 
@@ -117,8 +117,14 @@ class User(Base, UserMixin):
     # self.active = active
 
 
-Base.metadata.create_all(engine)
+class Project(Base):
+    __tablename__ = 'Project'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    image_path = Column(String)
+    url = Column(String)
 
+Base.metadata.create_all(engine)
 
 # class User(Base, UserMixin):
 #     password = Column(String)

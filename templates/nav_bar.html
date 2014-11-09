@@ -1,7 +1,6 @@
 {% block navbar %}
-    {% set navigation_bar = [
-('daily', 'Blog'),
-( 'project', 'Projects')] -%}
+    {% set blog_navigation_items = [('daily', 'Blog')] -%}
+    {% set other_navigation_items = [('projects', 'Projects')] -%}
 
     <!--<div class="container">-->
     <div class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -18,13 +17,29 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    {% for page_type, caption in navigation_bar %}
+                    {% for page_type, caption in blog_navigation_items %}
                         <li {% if page_type == active_page %} class="active"{% endif %}>
-                            <a href="{{ url_for('all_posts', page_type=page_type) }}">{{ caption }}</a></li>
+                            <a href="{{ url_for('all_posts', page_type=page_type) }}">
+                                {{ caption }}
+                            </a>
+                        </li>
                     {% endfor %}
-
+                    {% for handler_name, caption in other_navigation_items %}
+                        <li  {% if request.path in url_for(handler_name) %} class="active"{% endif %}>
+                            <a href="{{ url_for(handler_name, page_type=page_type) }}">
+                                {{ caption }}
+                            </a>
+                        </li>
+                    {% endfor %}
                 </ul>
-                <a class="btn pull-right add-btn" href="{{ url_for('editor') }}">
+
+                <a class="btn pull-right add-btn"
+                   href=" {% if page_type %}
+                   {{ url_for('editor') }}
+                {% elif request.path == url_for('projects') %}
+                                   {{ url_for('add_project') }}
+                {% endif %}
+                   ">
                     {#            <a class="btn pull-right" href="{{ url_for('aded') }}" style="margin-top:10px; background-color: transparent; color:#ffffff" action="POST">#}
                     <span class="glyphicon glyphicon-plus"></span></a>
             </div>
