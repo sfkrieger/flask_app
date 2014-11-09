@@ -25,6 +25,7 @@
                    value="{% if blog_item %}{{ blog_item.title }}{% endif %}">
         </div>
         <input type="hidden" name="method" value="{% if blog_item %}put{% else %}post{% endif %}">
+
         <div class="features">
             <section class="editor">
                 <div class="outer">
@@ -49,6 +50,13 @@
                     </div>
                 </div>
             </section>
+        </div>
+        <div>
+            <input type="text"
+                   name="type"
+                   class="form-control"
+                   id="type"
+                   value="daily">
         </div>
         <button type="submit" class="btn">{% if not blog_item %}ADD{% else %}EDIT{% endif %}</button>
     </form>

@@ -5,3 +5,5 @@ sqlalchemy
 markdown
 alembic
 psycopg2
+sqlalchemy_utils
+passlib

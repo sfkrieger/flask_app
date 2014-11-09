@@ -1,0 +1,26 @@
+{% extends "base_template.html" %}
+{% block title %}Login{% endblock title %}
+{% set active_page = page_type %}
+{% block scripts %}
+{% endblock scripts %}
+<!-- Marketing messaging and featurettes
+================================================== -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
+{% block content %}
+    {% if not user %}
+        {% if err %}{{ err }}{% endif %}
+        <form id="login" action="{{ url_for('login') }}" method="post">
+            <label>Username:
+                <input type="text" name="username"/>
+            </label>
+            <label>Password:
+                <input type="text" name="password"/>
+            </label>
+            <input type="submit"/>
+        </form>
+    {% else %}
+        You're already logged in you retard.
+    {% endif %}
+
+{% endblock content %}
+
