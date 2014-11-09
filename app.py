@@ -31,7 +31,7 @@ app = Flask(__name__)
 #
 # @login_manager.user_loader
 # def load_user(userid):
-#     return User.get(userid)
+# return User.get(userid)
 #
 # @app.route("/login", methods=["GET", "POST"])
 # def login():
@@ -68,10 +68,12 @@ def all_posts():
     posts = queries.get_blog_posts_in_order()
     return render_template('all_blog_posts.html', page_type=request.args.get('page_type'), entries=posts)
 
+
 @app.route('/blogs/<blog_id>')
 def single_post(blog_id):
     post = queries.get_byid(blog_id)
     return render_template('single.html', post=post)
+
 
 #Creates brand new blog post
 @app.route('/blogs/', methods=['POST'])
@@ -142,6 +144,7 @@ def manage_entry(blog_id):
 =======HELPER FUNCTIONS==========
 ---------------------------------
 """
+
 
 def delete_blog(blog_id):
     print "In the delete entry function..."
