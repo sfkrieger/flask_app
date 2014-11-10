@@ -5044,16 +5044,18 @@ body {
 .navbar {
   padding-left: 20px;
   padding-right: 20px; }
-  .navbar a {
+  .navbar #right-nav .user-placeholder {
+    width: 20px; }
+  .navbar #right-nav a {
     margin: 0; }
-    .navbar a .glyphicon-plus {
+    .navbar #right-nav a .glyphicon-plus {
       font-size: 24px;
       margin-top: 9px;
       font-weight: bolder;
       color: #7A7A7A; }
-      .navbar a .glyphicon-plus:hover {
+      .navbar #right-nav a .glyphicon-plus:hover {
         color: #333333; }
-    .navbar a.btn {
+    .navbar #right-nav a.btn {
       padding: 0; }
   .navbar .navbar-collapse {
     padding: 0; }
@@ -5184,3 +5186,6 @@ body {
   padding: 20px; }
   #single-post .title {
     margin-top: 0; }
+
+#login .user-placeholder {
+  width: 100px; }

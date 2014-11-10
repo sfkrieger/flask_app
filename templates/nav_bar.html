@@ -13,12 +13,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Dashboard</a>
+                <a class="navbar-brand" href="/">
+                    Dashboard
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     {% for page_type, caption in blog_navigation_items %}
-                        <li {% if page_type == active_page or request.path == url_for('all_posts') %} class="active"{% endif %}>
+                        <li {% if page_type == active_page or request.path == url_for('all_posts') %}
+                            class="active"{% endif %}>
                             <a href="{{ url_for('all_posts', page_type=page_type) }}">
                                 {{ caption }}
                             </a>
@@ -32,16 +35,29 @@
                         </li>
                     {% endfor %}
                 </ul>
-
-                <a class="btn pull-right add-btn"
-                   href=" {% if page_type or request.path == url_for('all_posts') %}
+                <div class="pull-right" id="right-nav">
+                    <a class="btn add-btn"
+                       href=" {% if page_type or request.path == url_for('all_posts') %}
                    {{ url_for('editor') }}
                 {% elif request.path == url_for('projects') %}
                                    {{ url_for('add_project') }}
                 {% endif %}
                    ">
-                    {#            <a class="btn pull-right" href="{{ url_for('aded') }}" style="margin-top:10px; background-color: transparent; color:#ffffff" action="POST">#}
-                    <span class="glyphicon glyphicon-plus"></span></a>
+                        {#            <a class="btn pull-right" href="{{ url_for('aded') }}" style="margin-top:10px; background-color: transparent; color:#ffffff" action="POST">#}
+                        <span class="glyphicon glyphicon-plus"></span></a>
+
+                    <a href="{{ url_for('login') }}" id="login">
+                        <img src="{{ url_for('static', filename='img/person.png') }}" class="user-placeholder"/>
+                        <span>
+                            {% if session.username %}
+                                {{ session.username }}
+                            {% endif %}
+                        </span>
+                    </a>
+
+                </div>
+
+
             </div>
         </div>
     </div>

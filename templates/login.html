@@ -7,20 +7,28 @@
 ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
 {% block content %}
-    {% if not user %}
-        {% if err %}{{ err }}{% endif %}
-        <form id="login" action="{{ url_for('login') }}" method="post">
-            <label>Username:
-                <input type="text" name="username"/>
-            </label>
-            <label>Password:
-                <input type="text" name="password"/>
-            </label>
-            <input type="submit"/>
-        </form>
-    {% else %}
-        You're already logged in you retard.
-    {% endif %}
-
+    <div id="login">
+        {% if not user %}
+            {% if err %}{{ err }}{% endif %}
+            <form id="login" action="{{ url_for('login') }}" method="post">
+                <label>Username:
+                    <input type="text" name="username"/>
+                </label>
+                <label>Password:
+                    <input type="text" name="password"/>
+                </label>
+                <input type="submit"/>
+            </form>
+        {% else %}
+            <img src="{{ url_for('static', filename='img/person.png') }}" class="user-placeholder"/>
+            <p>Logged in as {{ user.user_name }}</p>
+            <form id="logout" action="{{ url_for('logout') }}" method="post">
+                <input type="submit" value="Logout"/>
+            </form>
+        {% endif %}
+    <div>
+        TODO: Change user profile image,
+    </div>
+    </div>
 {% endblock content %}
 
