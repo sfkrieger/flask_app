@@ -1,5 +1,5 @@
 from flask import Flask, request, session, redirect, url_for, render_template, Response
-from flask.ext.login import LoginManager, login_user, login_required, logout_user
+from flask.ext.login import LoginManager, login_required
 
 import queries
 import config_secret
@@ -33,16 +33,21 @@ config_secret.install_secret_key(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @app.route('/')
 def index():
     return render_template('base_template.html')
 
+
 """
 =========== auth ================================
 """
+
+
 @login_manager.user_loader
 def load_user(userid):
     return queries.get_user_byid(userid)
+
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():
@@ -53,7 +58,6 @@ def login():
         usr = queries.get_user_byname(name)
         if usr:
             if usr.password == pswd:
-                login_user(usr)
                 session['logged_in'] = True
                 session['username'] = name
                 return redirect(url_for("index"))
@@ -70,11 +74,13 @@ def login():
             return Response(status=500)
     return render_template("login.html", user=user)
 
-@app.route("/logout")
-@login_required
+
+@app.route("/logout/", methods=["POST"])
 def logout():
-    logout_user()
-    return redirect(url_for(all_posts))
+    session.clear()
+    # session['logged_in'] = False
+    # session['username'] = None
+    return redirect(url_for('all_posts'))
 
 #
 """
@@ -96,7 +102,7 @@ def single_post(blog_id):
     return render_template('single.html', post=post)
 
 
-#Creates brand new blog post
+# Creates brand new blog post
 @app.route('/blogs/', methods=['POST'])
 def create_blog_post():
     new_entry = {'title': request.form['title'], 'text': request.form['text'], 'type': request.form['type']}
@@ -106,6 +112,7 @@ def create_blog_post():
     print title + " " + text
     queries.create_blog_post(title=title, content=text, type=type)
     return redirect(url_for('all_posts'))
+
 
 #Creates brand new blog post
 @app.route('/projects/', methods=['GET'])
@@ -117,7 +124,6 @@ def projects():
 @app.route('/projects/add', methods=['GET'])
 def add_project():
     return render_template('add_project.html')
-
 
 
 # Renders the markdown form for adding new blog

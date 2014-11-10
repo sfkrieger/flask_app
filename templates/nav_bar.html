@@ -51,6 +51,8 @@
                         <span>
                             {% if session.username %}
                                 {{ session.username }}
+                            {% else %}
+                                Anon
                             {% endif %}
                         </span>
                     </a>
