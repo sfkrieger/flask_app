@@ -76,6 +76,7 @@ def modify_byid(blog_id, content, title):
     db_session.commit()
     return entry
 
+
 def create_user(name, password):
     db_session = create_session()
     usr = User()
@@ -85,15 +86,17 @@ def create_user(name, password):
     db_session.commit()
     return usr
 
+
 def get_user_byid(id):
     db_session = create_session()
-    qry = db_session.query(BlogPost).filter(User.id == id)
+    qry = db_session.query(BlogPost).filter(User.id == int(id))
     try:
         entry = qry.one()
     except NoResultFound, e:
         print e
         return None
-    return qry
+    return entry
+
 
 def get_user_byname(name):
     db_session = create_session()

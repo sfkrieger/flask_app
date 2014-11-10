@@ -1,8 +1,9 @@
+from functools import wraps
 from flask import Flask, request, session, redirect, url_for, render_template, Response
-from flask.ext.login import LoginManager, login_required
 
 import queries
 import config_secret
+import settings
 
 """
 INFORMATION ABOUT CONVENTIONS USED:
@@ -21,17 +22,28 @@ Underscores are used to denote actions. They are the non-resful parts of the api
 When an action is an html page (such as add/edit), both the function and the path name will be appended with underscores
 
 HELPER FUNCTIONS AND STATUS SYMBOLS:
-1. For all helper functions, status symbols are returned.
+1. For all helper functions, status symbols are returnled.
 - If the status is 1, it was successful, if it was -1 it was unsucessful
 
 """
 
 app = Flask(__name__)
+app.jinja_env.globals.update(get_website_name=lambda: settings.website_name)
 config_secret.install_secret_key(app)
 
-# login happening
-login_manager = LoginManager()
-login_manager.init_app(app)
+
+def login_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        usr = None
+        name = session.get('username')
+        if name:
+            usr = queries.get_user_byname(name)
+        if usr:
+            return func(*args, **kwargs)
+        else:
+            return Response('Unauthorised!', status=401)
+    return decorated_view
 
 
 @app.route('/')
@@ -39,26 +51,15 @@ def index():
     return render_template('base_template.html')
 
 
-"""
-=========== auth ================================
-"""
-
-
-@login_manager.user_loader
-def load_user(userid):
-    return queries.get_user_byid(userid)
-
-
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
         # try to validate user
-        name = request.form['username']
         pswd = request.form['password']
+        name = request.form['username']
         usr = queries.get_user_byname(name)
         if usr:
             if usr.password == pswd:
-                session['logged_in'] = True
                 session['username'] = name
                 return redirect(url_for("index"))
         else:
@@ -114,7 +115,7 @@ def create_blog_post():
     return redirect(url_for('all_posts'))
 
 
-#Creates brand new blog post
+# Creates brand new blog post
 @app.route('/projects/', methods=['GET'])
 def projects():
     return render_template('projects.html')
@@ -129,6 +130,7 @@ def add_project():
 # Renders the markdown form for adding new blog
 @app.route('/blogs/editor')
 @app.route('/blogs/editor/<blog_id>')
+@login_required
 def editor(blog_id=None):
     blog = None
     if blog_id is not None:
