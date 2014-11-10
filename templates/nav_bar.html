@@ -18,7 +18,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     {% for page_type, caption in blog_navigation_items %}
-                        <li {% if page_type == active_page %} class="active"{% endif %}>
+                        <li {% if page_type == active_page or request.path == url_for('all_posts') %} class="active"{% endif %}>
                             <a href="{{ url_for('all_posts', page_type=page_type) }}">
                                 {{ caption }}
                             </a>
@@ -34,7 +34,7 @@
                 </ul>
 
                 <a class="btn pull-right add-btn"
-                   href=" {% if page_type %}
+                   href=" {% if page_type or request.path == url_for('all_posts') %}
                    {{ url_for('editor') }}
                 {% elif request.path == url_for('projects') %}
                                    {{ url_for('add_project') }}
