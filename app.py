@@ -1,4 +1,4 @@
-from flask import Flask, request, session, redirect, url_for, render_template
+from flask import Flask, request, session, redirect, url_for, render_template, Response
 from flask.ext.login import LoginManager, login_user, login_required, logout_user
 
 import queries
@@ -55,16 +55,19 @@ def login():
             if usr.password == pswd:
                 login_user(usr)
                 session['logged_in'] = True
-                # session['username'] = name
+                session['username'] = name
                 return redirect(url_for("index"))
         else:
             return render_template("login.html", err='No such user with username "' + name + '"')
-    user_id = session.get('user_id')
+    username = session.get('username')
     # session['username'] = request.form['username']
     # print "====================== " + user_id + "=========================="
     user = None
-    if user_id:
-        user = load_user(user_id)
+    if username:
+        user = queries.get_user_byname(username)
+        if not user:
+            # This should never happen.
+            return Response(status=500)
     return render_template("login.html", user=user)
 
 @app.route("/logout")
